@@ -1,6 +1,4 @@
-# Redis-chat
-
-# Real-Time Chat Application
+# Redis-chat, a real-Time Chat Application
 
 A simple real-time chat application built with Node.js, Express, Socket.io, and Redis.
 
