@@ -28,3 +28,33 @@ A simple real-time chat application built with Node.js, Express, Socket.io, and 
    ```bash
    git clone https://github.com/your-username/chat-application.git
    cd chat-application
+   
+2. Install dependencies:
+   ```bash
+   npm install
+   
+### Running the Application:
+
+1. Start the Redis server:
+   ```bash
+   redis-server
+   
+2. In a new terminal, navigate to the project directory and start the server:
+   ```bash
+   node server.js
+
+### Architecture Overview:
+
+The chat application consists of the following components:
+
+Client: Simple HTML/CSS/JavaScript frontend using Socket.io for real-time communication.
+Server: Node.js application using Express for HTTP handling and Socket.io for real-time communication.
+Redis: Redis is used to persist chat messages and manage session data.
+
+### Usage:
+
+Open a web browser and navigate to http://localhost:3000.
+Type a message into the input field and click "Send" to send a message.
+Messages will appear in the chat window as they are sent and received.
+
+
