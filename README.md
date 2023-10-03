@@ -37,6 +37,13 @@ You would typically install Redis using the package manager of the OS you are us
    ```bash
    sudo apt-get update
    sudo apt-get install redis-server
+   ```
+on a Mac
+
+   ```bash
+brew install redis
+brew services start redis
+   ```
 
 2. Start Redis:
 Once installed, you can start the Redis server with the command:
@@ -56,6 +63,11 @@ If Redis is running, this will return PONG.
 1. Start the Redis server:
    ```bash
    redis-server
+   ```
+to turn off the server:
+   ```bash
+   redis-cli shutdown
+   ```
    
 2. In a new terminal, navigate to the project directory and start the server:
    ```bash
