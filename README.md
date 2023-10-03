@@ -34,6 +34,26 @@ A simple real-time chat application built with Node.js, Express, Socket.io, and 
    npm install
    
 ### Running the Application:
+1. Install Redis:
+You would typically install Redis using the package manager of the OS you are using. For Ubuntu, you would use the following commands:
+   ```bash
+   sudo apt-get update
+   sudo apt-get install redis-server
+
+2. Start Redis:
+Once installed, you can start the Redis server with the command:
+
+   ```bash
+   redis-server
+
+Verify Redis Installation:
+In a new terminal, you can verify that Redis is running using the command:
+
+   ```bash
+   redis-cli ping
+```
+
+If Redis is running, this will return PONG.
 
 1. Start the Redis server:
    ```bash
