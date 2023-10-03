@@ -43,6 +43,31 @@ A simple real-time chat application built with Node.js, Express, Socket.io, and 
    ```bash
    node server.js
 
+### Exposing the Local Server using Ngrok:
+
+In order to allow remote access to your chat application, you can use Ngrok to expose your local server to the internet.
+
+#### Prerequisites:
+
+1. Ngrok account
+2. Ngrok installed on your machine
+
+Setup:
+
+Authenticate Ngrok:
+After signing up for an Ngrok account, authenticate your Ngrok CLI with your Authtoken:
+
+bash
+ngrok authtoken YOUR_NGROK_AUTH_TOKEN
+Start Ngrok:
+Start Ngrok to tunnel traffic to your local server (assuming your server is running on port 3000):
+
+    ```bash
+   ngrok http 3000
+
+Accessing the Application:
+Ngrok will provide a public URL (http and https) that you can share with your friend. They can use this URL to access the chat application from their web browser.
+
 ### Architecture Overview:
 
 The chat application consists of the following components:
