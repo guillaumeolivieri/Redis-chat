@@ -61,10 +61,10 @@ bash
 ngrok authtoken YOUR_NGROK_AUTH_TOKEN
 Start Ngrok:
 Start Ngrok to tunnel traffic to your local server (assuming your server is running on port 3000):
-
-    ```bash
+   
+   ```bash
    ngrok http 3000
-
+   ```
 Accessing the Application:
 Ngrok will provide a public URL (http and https) that you can share with your friend. They can use this URL to access the chat application from their web browser.
 
