@@ -26,7 +26,7 @@ A simple real-time chat application built with Node.js, Express, Socket.io, and 
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/your-username/chat-application.git
+   git clone https://github.com/guillaumeolivieri/Redis-chat.git
    cd chat-application
    
 2. Install dependencies:
