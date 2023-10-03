@@ -47,9 +47,9 @@ A simple real-time chat application built with Node.js, Express, Socket.io, and 
 
 The chat application consists of the following components:
 
-Client: Simple HTML/CSS/JavaScript frontend using Socket.io for real-time communication.
-Server: Node.js application using Express for HTTP handling and Socket.io for real-time communication.
-Redis: Redis is used to persist chat messages and manage session data.
+1. Client: Simple HTML/CSS/JavaScript frontend using Socket.io for real-time communication.
+2. Server: Node.js application using Express for HTTP handling and Socket.io for real-time communication.
+3. Redis: Redis is used to persist chat messages and manage session data.
 
 ### Usage:
 
