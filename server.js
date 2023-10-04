@@ -10,14 +10,18 @@ const io = socketIo(server);
 
 let userCount = 0;  // Variable to keep track of the number of connected users
 
-console.log('Emitting user count:', userCount);
-io.emit('user count', userCount);
-
 // Emit status of Redis and Socket.IO when a client connects
 io.on('connection', (socket) => {
-  console.log('a user connected');
+  let userId = 'user' + Math.floor(Math.random() * 10000);  // Temporarily identify users by a random number
+  socket.emit('user id', userId);  // Send userId to the client  console.log('a user connected');
   userCount++;  // Increment user count
   io.emit('user count', userCount);  // Broadcast updated user count
+
+  socket.on('chat message', (msg) => {
+    let message = { userId, text: msg };  // Create message object
+    redis.rpush('chat', JSON.stringify(message));  // Store message object in Redis
+    io.emit('chat message', message);  // Broadcast message object to all connected clients
+  });
 
   // Assume Redis and Socket.IO are working for this example
   socket.emit('status', { redis: 'online', socketIo: 'online' });
@@ -26,11 +30,6 @@ io.on('connection', (socket) => {
     console.log('user disconnected');
     userCount--;  // Decrement user count
     io.emit('user count', userCount);  // Broadcast updated user count
-  });
-
-  socket.on('chat message', (msg) => {
-    redis.rpush('chat', msg);  // Store message in Redis
-    io.emit('chat message', msg);  // Broadcast message to all connected clients
   });
 
   socket.on('typing', (isTyping) => {
