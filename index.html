@@ -106,15 +106,25 @@
     $('#m').val('');
     return false;
   }
+  var userId;  // Declare userId variable
 
-  socket.on('chat message', function (msg) {
-    $('#messages').append($('<li>').text(msg));
-    if (!myMessage) {
-      var audio = new Audio('sounds/notification.mp3');
-      audio.play();
+socket.on('user id', function(id) {
+  userId = id;  // Set userId value received from server
+});
+
+socket.on('chat message', function (message) {
+    let alignment = message.userId === userId ? 'right' : 'left';
+    let bgColor = message.userId === userId ? '#d1e7fd' : '#f1f1f1';
+    $('#messages').append(`
+        <li style="float: ${alignment}; background-color: ${bgColor}; border-radius: 5px; margin: 5px 0; padding: 10px;">
+            ${message.text}
+        <div style="clear: both;"></div>  <!-- This line clears the float -->
+    `);
+    if (message.userId !== userId) {  // Check if the message is not from the user itself
+        var audio = new Audio('notification.mp3');
+        audio.play();
     }
-    myMessage = false;  // reset the flag after processing the message
-  });
+});
 
   $('#m').on('input', function() {
     socket.emit('typing', $(this).val() !== '');
