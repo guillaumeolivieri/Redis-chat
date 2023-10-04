@@ -13,19 +13,22 @@ let userCount = 0;  // Variable to keep track of the number of connected users
 // Emit status of Redis and Socket.IO when a client connects
 io.on('connection', (socket) => {
   let userId = 'user' + Math.floor(Math.random() * 10000);  // Temporarily identify users by a random number
-  socket.emit('user id', userId);  // Send userId to the client  console.log('a user connected');
+  socket.emit('user id', userId);  // Send userId to the client
   userCount++;  // Increment user count
   io.emit('user count', userCount);  // Broadcast updated user count
 
-  socket.on('chat message', (msg) => {
-    let message = { userId, text: msg };  // Create message object
-    redis.rpush('chat', JSON.stringify(message));  // Store message object in Redis
-    io.emit('chat message', message);  // Broadcast message object to all connected clients
-  });
+  socket.on('chat message', (msgObj) => {
+      let message = { userId: msgObj.userId, text: msgObj.text };  // Use userId from msgObj
+      if (!message.text) {
+        console.error('Message text is undefined:', msgObj);
+        return;
+      }
+      redis.rpush('chat', JSON.stringify(message));  // Store message object in Redis
 
-  // Assume Redis and Socket.IO are working for this example
-  socket.emit('status', { redis: 'online', socketIo: 'online' });
-
+    // Broadcast message object to all connected clients with the updated style
+      io.emit('chat message', message);  // Emit the message object
+    });
+    
   socket.on('disconnect', () => {
     console.log('user disconnected');
     userCount--;  // Decrement user count
@@ -35,7 +38,7 @@ io.on('connection', (socket) => {
   socket.on('typing', (isTyping) => {
     socket.broadcast.emit('typing', isTyping);
   });
-});
+});  // <-- These were missing
 
 // Route to handle requests to the root URL
 app.get('/', (req, res) => {
