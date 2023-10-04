@@ -3,12 +3,28 @@
   <head>
     <title>Socket.IO chat</title>
     <style>
-      /* Add your styles here */
+      /* ... Your existing styles ... */
+      .status {
+        display: inline-block;
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+      }
+      .online {
+        background-color: green;
+      }
+      .offline {
+        background-color: red;
+      }
     </style>
   </head>
   <body>
     <ul id="messages"></ul>
     <input id="m" autocomplete="off" /><button onclick="sendMessage()">Send</button>
+    <div>
+      Redis Status: <span id="redisStatus" class="status offline"></span>
+      Socket.IO Status: <span id="socketIoStatus" class="status offline"></span>
+    </div>
     <script src="/socket.io/socket.io.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
@@ -21,6 +37,10 @@
       }
       socket.on('chat message', function(msg){
         $('#messages').append($('<li>').text(msg));
+      });
+      socket.on('status', function (status) {
+        $('#redisStatus').toggleClass('online offline', status.redis);  // Update status color based on Redis status
+        $('#socketIoStatus').toggleClass('online offline', status.socketIo);  // Assume Socket.IO is always online in this example
       });
     </script>
   </body>
