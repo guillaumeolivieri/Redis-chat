@@ -8,22 +8,39 @@ const app = express();
 const server = http.createServer(app);
 const io = socketIo(server);
 
-// Route to handle requests to the root URL
-app.get('/', (req, res) => {
-  res.sendFile(__dirname + '/index.html');
-});
+let userCount = 0;  // Variable to keep track of the number of connected users
 
+console.log('Emitting user count:', userCount);
+io.emit('user count', userCount);
+
+// Emit status of Redis and Socket.IO when a client connects
 io.on('connection', (socket) => {
   console.log('a user connected');
-  
+  userCount++;  // Increment user count
+  io.emit('user count', userCount);  // Broadcast updated user count
+
+  // Assume Redis and Socket.IO are working for this example
+  socket.emit('status', { redis: 'online', socketIo: 'online' });
+
   socket.on('disconnect', () => {
     console.log('user disconnected');
+    userCount--;  // Decrement user count
+    io.emit('user count', userCount);  // Broadcast updated user count
   });
-  
+
   socket.on('chat message', (msg) => {
     redis.rpush('chat', msg);  // Store message in Redis
     io.emit('chat message', msg);  // Broadcast message to all connected clients
   });
+
+  socket.on('typing', (isTyping) => {
+    socket.broadcast.emit('typing', isTyping);
+  });
+});
+
+// Route to handle requests to the root URL
+app.get('/', (req, res) => {
+  res.sendFile(__dirname + '/index.html');
 });
 
 server.listen(3000, () => {
